@@ -51,6 +51,7 @@ export default class Node {
     this.expanded = false;
     this.parent = null;
     this.visible = true;
+    this.loadCallbacks= []
 
     for (let name in options) {
       if (options.hasOwnProperty(name)) {
@@ -263,6 +264,11 @@ export default class Node {
     this.indeterminate = value === 'half';
     this.checked = value === true;
 
+
+    if(value !== false) this.expand(() => {
+      this.store.treeRef.refresh()
+    })
+
     const handleDescendants = () => {
       if (deep) {
         const childNodes = this.childNodes;
@@ -337,6 +343,7 @@ export default class Node {
 
   loadData(callback, defaultProps = {}) {
     if (this.store.lazy === true && this.store.load && !this.loaded && !this.loading) {
+      if(callback) this.loadCallbacks.push(callback)
       this.loading = true;
 
       const resolve = (children) => {
@@ -347,15 +354,24 @@ export default class Node {
         this.doCreateChildren(children, defaultProps);
 
         this.updateLeafState();
-        if (callback) {
-          callback.call(this, children);
+        for (let index = this.loadCallbacks.length - 1; index >= 0; index--) {
+          const callback = this.loadCallbacks.pop();
+          if (callback) {
+            callback.call(this, children);
+          }
         }
       };
 
       this.store.load(this, resolve);
     } else {
       if (callback) {
-        callback.call(this);
+        if(this.loading) {
+          this.loadCallbacks.push(callback)
+        } else {
+
+          callback.call(this);
+        }
+
       }
     }
   }

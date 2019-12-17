@@ -22,6 +22,7 @@ export default class Tree extends Component {
       checkStrictly, autoExpandParent, defaultExpandAll, filterNodeMethod } = this.props;
     this.state = {
       store: new TreeStore({
+        treeRef: this,
         key: nodeKey, data, lazy, props: options, load, currentNodeKey, checkStrictly,
         defaultCheckedKeys, defaultExpandedKeys, autoExpandParent, defaultExpandAll, filterNodeMethod
       }),

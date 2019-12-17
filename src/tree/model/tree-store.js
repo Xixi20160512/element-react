@@ -201,20 +201,34 @@ export default class TreeStore {
           let all = true;
           let none = true;
 
-          for (let i = 0, j = childNodes.length; i < j; i++) {
-            const child = childNodes[i];
-            if (child.checked !== true || child.indeterminate) {
-              all = false;
-            }
-            if (child.checked !== false || child.indeterminate) {
-              none = false;
+          if(childNodes.length === 0) {
+            all = none = false
+          } else {
+
+            for (let i = 0, j = childNodes.length; i < j; i++) {
+              const child = childNodes[i];
+              if (child.checked !== true || child.indeterminate) {
+                all = false;
+              }
+              if (child.checked !== false || child.indeterminate) {
+                none = false;
+              }
             }
           }
 
+
+          if(checkedKeys[node.data[key]] === 'half') {
+             none = false
+             all = false
+             checked = 'half'
+          } 
+
+          if(node.checked === checked) return
+          
           if (all) {
             node.setChecked(true, !this.checkStrictly);
           } else if (!all && !none) {
-            checked = checked ? true : 'half';
+            checked = checked === true ? true : 'half';
             node.setChecked(checked, !this.checkStrictly && checked === true);
           } else if (none) {
             node.setChecked(checked, !this.checkStrictly);
@@ -248,9 +262,10 @@ export default class TreeStore {
     const key = this.key;
     const checkedKeys = {};
     array.forEach((item) => {
-      checkedKeys[(item || {})[key]] = true;
+      checkedKeys[(item || {})[key]] = item.indeterminate ? 'half' : true;
     });
 
+    this.defaultCheckedKeys = Object.keys(checkedKeys)
     this._setCheckedKeys(key, leafOnly, checkedKeys);
   }
 

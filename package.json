@@ -13,8 +13,12 @@
     "jest": "jest",
     "lint": "eslint src libs site --quiet",
     "build": "cd build/site && webpack --progress",
-    "prepubl¡sh": "./build/scripts/prepare.sh",
-    "postpublish": "./build/scripts/release.sh"
+    "prepublish": "./build/scripts/prepare.sh &&  cp -r dist /Users/ruanxihao/code/fcbox/kuaidi-open/node_modules/element-react",
+    "postpublish": "./build/scripts/release.sh",
+    "watch_local": "npm-watch prepublish"
+  },
+  "watch": {
+    "prepublish": "{src,test}/*.*"
   },
   "repository": {
     "type": "git",
@@ -64,6 +68,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "mock-raf": "^1.0.1",
     "node-sass": "^4.11.0",
+    "npm-watch": "^0.6.0",
     "prismjs": "^1.15.0",
     "raw-loader": "^1.0.0",
     "react": "*",
