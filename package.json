@@ -14,7 +14,6 @@
     "lint": "eslint src libs site --quiet",
     "build": "cd build/site && webpack --progress",
     "prepublish": "./build/scripts/prepare.sh &&  cp -r dist /Users/ruanxihao/code/fcbox/kuaidi-open/node_modules/element-react",
-    "postpublish": "./build/scripts/release.sh",
     "watch_local": "npm-watch prepublish"
   },
   "watch": {
