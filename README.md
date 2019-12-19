@@ -1,5 +1,7 @@
 # Element React
 
+> 注意，这是一份element-react官方仓库的副本，旨在定制优化某些特性。如有可能，会将这部分代码提交申请合并到官方仓库。
+
 [![](https://travis-ci.org/eleme/element-react.svg?branch=master)](https://travis-ci.org/eleme/element-react)
 [![](https://img.shields.io/npm/v/element-react.svg)](https://www.npmjs.com/package/element-react)
 [![](https://img.shields.io/npm/dm/element-react.svg)](https://www.npmjs.com/package/element-react)
